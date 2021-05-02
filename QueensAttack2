@@ -1,0 +1,57 @@
+public static int queensAttack(int n, int k, int r_q, int c_q, List<List<Integer>> obstacles) {
+    // Write your code here
+        int u = n - r_q,
+            r = n - c_q,
+            d = r_q - 1,
+            l = c_q - 1;
+
+        int ur = Math.min(u,r), 
+            dr = Math.min(d,r),
+            dl = Math.min(d,l),
+            ul = Math.min(u,l);
+            
+        for (List<Integer> obstacle: obstacles) {
+            int oX = obstacle.get(0);
+            int oY = obstacle.get(1);
+            if (oY == c_q) {
+                // check u
+                if (oX > r_q) {
+                    u = Math.min(oX - r_q - 1, u);
+                }
+                // check d
+                else {
+                    d = Math.min(r_q - oX - 1, d);
+                }
+            }
+            else if (oX == r_q){
+                // check r
+                if (oY > c_q) {
+                    r = Math.min(oY - c_q - 1, r);
+                }
+                // check l
+                else {
+                    l = Math.min(c_q - oY - 1, l);
+                }
+            }
+            else if (Math.abs(oX-r_q) == Math.abs(oY-c_q)) {
+                if (oY > c_q) {            
+                    // check ur
+                    if (oX > r_q) ur = Math.min(oY - c_q - 1, ur);
+                    // check dr
+                    else  dr = Math.min(oY - c_q - 1, dr);
+                }
+                else {
+                    // check ul
+                    if (oX > r_q) ul = Math.min(oX - r_q - 1, ul);
+                    // check dl
+                    else dl = Math.min(c_q - oY - 1, dl);
+                }
+                
+            }
+        
+        }
+        
+        return u + ur + r + dr + d + dl + l + ul;
+    }
+
+}
