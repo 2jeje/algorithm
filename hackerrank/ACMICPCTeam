@@ -1,0 +1,59 @@
+
+
+https://www.hackerrank.com/challenges/acm-icpc-team/problem?h_r=next-challenge&h_v=zen
+
+
+
+class Topic {
+    List<Integer> arr = new ArrayList<Integer>();
+        Topic(String str) {
+            for (char c : str.toCharArray()) {
+            arr.add(Integer.parseInt(String.valueOf(c)));
+        }
+    }
+    
+    int calculate(List<Integer> param) {
+        int ret = 0;
+        for (int i = 0 ; i < arr.size() ; i++) {
+            if ((param.get(i) | arr.get(i)) == 1) 
+            ret++;
+        }
+        return ret;
+    }
+}
+    
+class Result {
+
+    public static List<Integer> acmTeam(List<String> topic) {
+    // Write your code here
+        List<Integer> result = new ArrayList<Integer>();
+        List<Topic> topics = new ArrayList<Topic>();
+        
+        int maxOfTopic = 0;
+        int maxOfTeam = 0;
+        
+        for (String str : topic) {
+            topics.add(new Topic(str));
+        }
+        
+        for (int i = 0 ; i < topics.size() ; i++) {
+            Topic to = topics.get(i);
+            for (int j = i + 1; j < topics.size(); j++) {
+                int temp = to.calculate(topics.get(j).arr);
+                if (temp > maxOfTopic) {
+                    maxOfTopic = temp;
+                    maxOfTeam = 1;
+                }
+                else if (temp == maxOfTopic) {
+                    maxOfTeam++;
+                }
+            }
+        }
+        
+        result.add(maxOfTopic);
+        result.add(maxOfTeam);
+        
+        return result;
+    }
+
+}
